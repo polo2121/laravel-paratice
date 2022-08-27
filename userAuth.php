@@ -1,36 +1,62 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Rules;
 
-use App\Models\User;
-use App\Rules\userAuth as RulesUserAuth;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\userAuth as requestInput;
 
 
-class userAuth extends FormRequest
+
+class userAuth implements Rule
 {
+    private $errorMessage, $currentEmail;
     /**
-     * Determine if the user is authorized to make this request.
+     * Create a new rule instance.
      *
-     * @return bool
+     * @return void
      */
-    public function authorize()
+    public function __construct($email)
     {
-        return true;
+        //
+        $this->currentEmail = $email;
     }
 
     /**
-     * Get the validation rules that apply to the request.
+     * Determine if the validation rule passes.
      *
-     * @return array<string, mixed>
+     * @param  string  $attribute
+     * @param  mixed  $value
+     * @return bool
      */
-    public function rules()
+    public function passes($attribute, $value)
     {
-        $request = new Request();
-        return [
-            'email' => ['required', 'email', new RulesUserAuth($request->input($this->email))],
-            'password' => ['required', 'min:8', 'regex:/(^[A-Z][a-z]+\d{4})/u', new RulesUserAuth($this->email)]
-        ];
+        //
+        if ($attribute == 'email') {
+            if (DB::table('users')->where('email', $value)->exists()) {
+                $this->currentEmail = $value;
+                return true;
+            }
+            $this->errorMessage = "The email is not register yet.";
+        } else {
+            $pwd = DB::table('users')->where('email', $this->currentEmail)->value('password');
+            if ($value == $pwd) {
+                session(['userId' => $this->currentEmail]);
+                return true;
+            }
+            $this->errorMessage = 'incorrect user';
+        };
+
+        return false;
+    }
+
+    /**
+     * Get the validation error message.
+     *
+     * @return string
+     */
+    public function message()
+    {
+        return $this->errorMessage;
     }
 }
