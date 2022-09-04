@@ -1,0 +1,124 @@
+body{
+    background-color: #FDEFEC;
+    color: #101010;
+    font-family: 'Darker Grotesque', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* 101010 */
+}
+.container {
+    display: flex;
+    padding: 1rem;
+}
+
+.container > p {
+    font-size: 1.4rem;
+    margin: 0;
+    padding-bottom:.4rem;
+    font-weight: 500;
+}
+.title{
+    width: 40%;
+    height: 100vh;
+    position: relative;
+}
+
+.container .title > h1 {
+    font-family: 'Abril Fatface', cursive, sans-serif;
+    font-size: 10vw;
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    margin: 0;
+}
+.content {
+    width: 60%;
+    
+}
+.input-group{
+    display: flex;
+    flex-wrap: wrap;
+}
+.inputs{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+label{
+    font-size: 2rem;
+    /* font-weight: 600; */
+    padding-bottom: 1rem;
+}
+select,input,textarea{
+    width: 96%;
+    padding-block: 1rem;
+    border: solid 2px #101010;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    padding-left: .6rem;
+}
+input,textarea{
+    width: 94%;
+}
+.button{
+    position: absolute;
+    background-color:#eab6af;
+    bottom: -80px;
+    right: 0;
+    width: 100%;
+    z-index: 1;
+    text-align: right;
+    cursor: pointer;
+    padding-block:2rem;
+    
+}
+.button > button {
+    font-size: 3vw;
+    padding-inline: 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 500;
+    color: #10101053;
+    border: none;
+    background: transparent;
+    transition: 0.3s background-color ease-in;
+
+}
+.button > button:hover{
+    color: #FFFFFF;
+    /* background-color: #df8c81; */
+}
+svg{
+    -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+    -webkit-mask-size: 200%;
+    animation: shine 4s linear infinite;
+}
+.down-here{
+    position: absolute;
+    right: 6rem;
+}
+#a3{
+    position: absolute;
+    left: 14rem;
+    top: 4rem;
+}
+#a2{
+    position: absolute;
+    top:14rem;
+    left: 8rem;
+}
+#animContainer{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;   
+    background-color: #FFFFFF;
+    z-index: 4;
+}
+@keyframes shine {
+    from { -webkit-mask-position: 150%; }
+    to { -webkit-mask-position: -50%; }
+  }
